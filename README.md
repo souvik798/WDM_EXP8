@@ -1,7 +1,10 @@
-### EX8 Web Scraping On E-commerce platform using BeautifulSoup
-### DATE: 
-### AIM: To perform Web Scraping on Amazon using (beautifulsoup) Python.
-### Description: 
+<H1 ALIGN=CENTER> WEB SCRAPING ON E-COMMERCE PLATFORM USING BEAUTIFULSOUP </H1>
+
+<H3>DATE  : 05.05.2024 </H3>
+
+## AIM: 
+To perform Web Scraping on Amazon using (beautifulsoup) Python.
+## DESCRIPTION: 
 <div align = "justify">
 Web scraping is the process of extracting data from various websites and parsing it. In other words, it’s a technique 
 to extract unstructured data and store that data either in a local file or in a database. 
@@ -13,7 +16,7 @@ One can search, navigate, and modify data using a parser. It’s versatile and s
 <p>3) Extraction
 <p>4) Transformation
 
-### Procedure:
+## PROCEDURE:
 
 1) Import necessary libraries (requests, BeautifulSoup, re, matplotlib.pyplot).
 2) Define convert_price_to_float(price) Function: to Remove non-numeric characters from a price string and convert it to a float.
@@ -24,7 +27,7 @@ One can search, navigate, and modify data using a parser. It’s versatile and s
 7) Check if products are found; if not, display "No products found."
 8) Visualize Product Data using a Bar Chart
 
-### Program:
+## PROGRAM:
 ```PYTHON
 import requests
 from bs4 import BeautifulSoup
@@ -49,7 +52,19 @@ def get_amazon_products(search_query):
     products_data = []  # List to store product information
 
     if response.status_code == 200:
-        /* TYPE YOUR CODE HERE
+        soup = BeautifulSoup(response.text, 'html.parser')
+        # Find all divs containing product information
+        products = soup.find_all('div', {'data-component-type': 's-search-result'})
+
+        for product in products:
+            name = product.find('span', {'class': 'a-text-normal'}).text.strip()
+            price = product.find('span', {'class': 'a-offscreen'})
+            if price:
+                price = price.text.strip()
+            else:
+                price = 'Price not available'
+            products_data.append({'Product': name, 'Price': price})
+
 
     return sorted(products_data, key=lambda x: convert_price_to_float(x['Price']))
 
@@ -74,6 +89,9 @@ else:
 
 ```
 
-### Output:
+## OUTPUT:
+![image](https://github.com/pavizhi/WDM_EXP8/assets/95067176/6f88834f-65d2-4876-ac20-67f80216faa7)
 
-### Result:
+
+## RESULT:
+Thus Web Scraping On e-commerce platform using BeautifulSoup is executed successfully.
